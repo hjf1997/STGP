@@ -1,0 +1,59 @@
+task:
+  target_domain: chengdu_m
+  target_training_size: 3 # number of days
+  patch_size: 12 # 1 hour in each patch
+  num_patch: 25  # one day data
+  inductive: False
+  forecasting:
+    history_patch: 24
+    future_patch: 1 # 1 hour in each patch
+  kriging:
+    test_node_ratio: 0.3 # number of known nodes
+
+data:
+  metr-la:
+    dataset_path: dataset/metr-la/dataset_expand.npy
+    adjacency_matrix_path: dataset/metr-la/matrix.npy
+    test_node_path: dataset/metr-la/test_node.npy
+    type: traffic
+    start_time: 2012-05-01 00:00:00
+
+  pems-bay:
+    dataset_path: dataset/pems-bay/dataset_expand.npy
+    adjacency_matrix_path: dataset/pems-bay/matrix.npy
+    test_node_path: dataset/pems-bay/test_node.npy
+    type: traffic
+    start_time: 2017-01-01 00:00:00
+
+  chengdu_m:
+    dataset_path: dataset/chengdu_m/dataset_expand.npy
+    adjacency_matrix_path: dataset/chengdu_m/matrix.npy
+    test_node_path: dataset/chengdu_m/test_node.npy
+    type: traffic
+    start_time: 2018-01-01 00:00:00
+
+  shenzhen:
+    dataset_path: dataset/shenzhen/dataset_expand.npy
+    adjacency_matrix_path: dataset/shenzhen/matrix.npy
+    test_node_path: dataset/shenzhen/test_node.npy
+    type: traffic
+    start_time: 2018-01-01 00:00:00
+
+model:
+  name: stgprompt
+#  checkpoint_stamp: "domain_20231227T154659"
+  checkpoint_stamp: "domain_inductive_20231228T014106"
+#  checkpoint_stamp: "pre_20231223T001729"
+  num_in_degree: 50
+  num_out_degree: 50
+  num_spatial: 100
+  in_channel: 1
+  embed_dim: 128
+  num_heads: 4
+  mlp_ratio: 2
+  mask_ratio: 0.5
+  num_prompt: 25
+  num_task_prompt: 25
+  prompt_threshold: 0.2
+  encoder_depth: 4
+  dropout: 0.3
